@@ -1,0 +1,59 @@
+@import "bootstrap/scss/variables";
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #3c658b;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+form {
+  margin-bottom: 30px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+  margin-right: 10px;
+}
+
+input[type="submit"] {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.weather-info {
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.weather-info img {
+  width: 100px;
+  height: 100px;
+}
+
+.weather-info h2 {
+  margin: 10px 0;
+}
