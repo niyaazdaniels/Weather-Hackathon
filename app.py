@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from weather import main  
 
+
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])

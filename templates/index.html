@@ -1,165 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-        crossorigin="anonymous"
-    />
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link rel="stylesheet" href="/templates/styles.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="shortcut icon" href="https://openweathermap.org/img/wn/{{ data.icon }}@2x.png" type="image/x-icon">
+    <link rel="stylesheet" href="../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to right, #1e3c72, #2a5298), url('https://example.com/your-texture-image.jpg');
+            background-size: cover, cover;
+            background-blend-mode: overlay;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .card {
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-info {
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-info:hover {
+            background-color: #17a2b8;
+        }
+
+        .footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .small {
+            font-size: 0.9rem;
+        }
+    </style>
+
     <title>Weather App</title>
 </head>
-<body class="text-white overflow-x-hidden">
+
+<body class="bg-dark bg-gradient bg-opacity-75 text-white ">
     <div class="text-center">
-        <h1 class="mt-5">Weather App</h1>
-        <form action="" method="post">
-            <div class="container">
-                <div class="row container">
-                    <div class="col-sm">
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="cityName"
-                            id="cityName"
-                            placeholder="City"
-                            autocomplete="off"
-                        />
-                        <button class="submit btn btn-light mt-3">Find</button>
+        <h1 class="mt-5 p-3 display-4 fw-bold">Weather App</h1>
+        <form action="" method="post" class="mb-4">
+            <div class="container-lg">
+                <div class="row justify-content-center">
+                    <div class="col-auto">
+                        <input type="text" class="form-control" name="cityName" id="cityName" placeholder="Enter City"
+                            autocomplete="off" required />
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-info">Find</button>
                     </div>
                 </div>
             </div>
         </form>
-
-        {% if data %}
-        
-        <div class="row d-flex justify-content-center py-3">
-          <div class="col-md-8 col-lg-6 col-xl-5">
-              <div class="card bg-info-rgb text-body shadow-4-strong" style="border-radius: 40px">
-                  <div class="card-body p-4 ">
-                      <div class="d-flex">
-                          <h4 class="flex-grow-1 text-start">{{ data.name }}</h4>
-                          <h5>{{ data.current_time }}</h5>
-                      </div>
-      
-                      <div class="d-flex flex-column text-center mt-5 mb-4">
-                          <h5 class="display-4 mb-0 font-weight-bold">
-                              {{ data.temperature }}°C
-                          </h5>
-                          <span class="small text-capitalize" style="color: #868b94">
-                              {{ data.description }}</span
-                          >
-                      </div>
-      
-                      <div class="d-flex align-items-center">
-                          <div class="flex-grow-1 text-start" style="font-size: 1rem">
-                              <div>
-                                  <i class="fa-solid fa-wind" style="color: #98FF98"></i>
-                                  <span class="ms-1">{{ data.wind_speed }} km/h</span>
-                              </div>
-                              <div>
-                                  <i class="fas fa-tint" style="color: #00FFFF"></i>
-                                  <span class="ms-1">Humidity {{ data.humidity }}%</span>
-                              </div>
-                              <div>
-                                  <i class="fa-solid fa-temperature-low" style="color: #A7C6ED"></i>
-                                  <span class="ms-1">Low {{ data.temp_min }}°C <br /></span>
-                              </div>
-                              <div>
-                                  <i class="fa-solid fa-temperature-high" style="color: #DC143C"></i>
-                                  <span class="ms-1">High {{ data.temp_max }}°C</span>
-                              </div>
-                          </div>
-                          <div>
-                              <img
-                                  src="https://openweathermap.org/img/wn/{{ data.icon }}@2x.png"
-                                  width="120px" alt="icon"
-                              />
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      
-
-        <div class="container mt-4">
-          <h3> {{ data.name }} 5-Day Forecast</h3>
-          <table class="table table-bordered">
-              <thead class="thead-light">
-                  <tr>
-                      <th>Date</th>
-                      <th>Weather</th>
-                      <th>Description</th>
-                      <th>Max Temp (°C)</th>
-                      <th>Min Temp (°C)</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for day in data.forecast_5_day %}
-                      <tr>
-                          <td>{{ day.date }}</td>
-                          <td>
-                              <img
-                                  src="https://openweathermap.org/img/wn/{{ day.icon }}@2x.png"
-                                  width="50px" alt="icon"
-                              />
-                          </td>
-                          <td class="text-capitalize text-start align-items-center">{{ day.description }}</td>
-                          <td>{{ day.temp_max }}°C</td>
-                          <td>{{ day.temp_min }}°C</td>
-                      </tr>
-                  {% endfor %}
-              </tbody>
-          </table>
-      </div>
-      
-      <!-- Hourly Forecast -->
-      <div class="container mt-4">
-          <h3>Hourly Forecast</h3>
-          <table class="table table-bordered rounded">
-              <thead class="thead-light">
-                  <tr>
-                      <th>Time</th>
-                      <th>Weather</th>
-                      <th>Description</th>
-                      <th>Temperature (°C)</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for hour in data.hourly_forecast %}
-                      <tr>
-                          <td>{{ hour.time }}</td>
-                          <td>
-                              <img
-                                  src="https://openweathermap.org/img/wn/{{ hour.icon }}@2x.png"
-                                  width="50px" alt="icon"
-                              />
-                          </td>
-                          <td class="text-capitalize">{{ hour.description }}</td>
-                          <td>{{ hour.temperature }}°C</td>
-                      </tr>
-                  {% endfor %}
-              </tbody>
-          </table>
-      </div>
-      
-
-        {% else %}
-        <p>Please enter a city name to get the weather information.</p>
-        {% endif %}
     </div>
 
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"
-    ></script>
+    <!-- Daily Forecast -->
+    {% if data %}
+    <div class="container-lg mt-3 d-flex justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-5">
+            <div class="card text-bg-info text-body shadow-lg border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4>{{ data.name }}</h4>
+                        <h5>{{ data.current_time }}</h5>
+                    </div>
+                    <div class="d-flex flex-column text-center mt-5 mb-4">
+                        <h5 class="display-4 mb-0 font-weight-bold">{{ data.temperature }}°C</h5>
+                        <span class="small text-capitalize">{{ data.description }}</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 text-start" style="font-size: 1rem">
+                            <div>
+                                <i class="fa-solid fa-wind" style="color: #98FF98"></i>
+                                <span class="ms-1">{{ data.wind_speed }} km/h</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-tint" style="color: #00FFFF"></i>
+                                <span class="ms-1">Humidity: {{ data.humidity }}%</span>
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-temperature-low" style="color: #A7C6ED"></i>
+                                <span class="ms-1">Low: {{ data.temp_min }}°C</span>
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-temperature-high" style="color: #DC143C"></i>
+                                <span class="ms-1">High: {{ data.temp_max }}°C</span>
+                            </div>
+                        </div>
+                        <div>
+                            <img src="https://openweathermap.org/img/wn/{{ data.icon }}@2x.png" width="120" alt="Weather Icon" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hourly Forecast -->
+    <div class="container-lg mt-4">
+        <h3 class="text-light p-3">{{ data.name }} <br> 3-Hour Forecast</h3>
+        <div class="card text-bg-info shadow-lg">
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between fw-semibold">
+                        <div class="flex-fill text-start">Time</div>
+                        <div class="flex-fill text-start">Weather</div>
+                        <div class="flex-fill text-center">Description</div>
+                        <div class="flex-fill text-center">Temperature (°C)</div>
+                    </div>
+                    <hr class="my-2">
+                </div>
+                {% for hour in data.hourly_forecast %}
+                <div class="d-flex justify-content-evenly align-items-center mb-3">
+                    <div class="flex-fill text-start">{{ hour.time }}</div>
+                    <div class="flex-fill text-start">
+                        <img src="https://openweathermap.org/img/wn/{{ hour.icon }}@2x.png" width="50" alt="Weather Icon" />
+                    </div>
+                    <div class="flex-fill text-start text-capitalize">{{ hour.description }}</div>
+                    <div class="flex-fill text-center">{{ hour.temperature }}°C</div>
+                </div>
+                <hr class="my-1">
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- 5 Day Forecast -->
+    <div class="container-lg mt-5">
+        <h3 class="text-light p-3">{{ data.name }} <br> 5-Day Forecast</h3>
+        <div class="card text-bg-info shadow-lg">
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between fw-semibold text-center">
+                        <div class="flex-fill">Date</div>
+                        <div class="flex-fill">Weather</div>
+                        <div class="flex-fill">Description</div>
+                        <div class="flex-fill">Max Temp (°C)</div>
+                        <div class="flex-fill">Min Temp (°C)</div>
+                    </div>
+                    <hr class="my-2">
+                </div>
+                {% for day in data.forecast_5_day %}
+                <div class="d-flex justify-content-between align-items-center mb-3 text-center">
+                    <div class="card-text">{{ day.date }}</div>
+                    <div class="card-text">
+                        <img src="https://openweathermap.org/img/wn/{{ day.icon }}@2x.png" width="50" alt="Weather Icon" />
+                    </div>
+                    <div class="card-text text-capitalize">{{ day.description }}</div>
+                    <div class="card-text">{{ day.temp_max }}°C</div>
+                    <div class="card-text">{{ day.temp_min }}°C</div>
+                </div>
+                <hr class="my-2">
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="container text-center mt-4">
+        <p class="text-light">Please enter a city name to get the weather information.</p>
+    </div>
+    {% endif %}
+    </div>
+    <footer class="footer text-center pt-3 mt-3 pb-2">© 2024 Niyaaz Daniels. Damon Raffles, Unity Demas, All Rights Reserved.</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 </body>
 </html>

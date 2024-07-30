@@ -1,98 +1,3 @@
-# import requests
-# from dotenv import load_dotenv
-# import os
-# from dataclasses import dataclass
-# from datetime import datetime, timedelta
-
-# load_dotenv()
-# api_key = os.getenv('API_KEY')
-
-# @dataclass
-# class WeatherData:
-#     main: str 
-#     name: str
-#     timezone: float
-#     description: str
-#     icon: str
-#     feels_like: int
-#     temp_min: int
-#     temp_max: int
-#     pressure: int
-#     humidity: int
-#     temperature: int
-#     wind_speed: int 
-#     sunrise: int      
-#     sunset: int
-#     current_time: str       
-
-#     # 5 day / 3 hour forecast api
-#     # api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
-
-#     # hourly forecast 
-#     # https://pro.openweathermap.org/data/2.5/forecast/hourly?lat={lat}&lon={lon}&appid={API key}
-
-# def get_lat_lon(city_name, API_key):
-#     resp = requests.get(f'http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={API_key}').json()
-#     # Check if the response contains results
-#     if resp:
-#         data = resp[0]
-#         lat, lon = data.get('lat'), data.get('lon')
-#         return lat, lon
-#     else:
-#         # Return None if no results found
-#         return None, None
-# def get_current_weather(lat, lon, API_key):
-#     if lat is None or lon is None:
-#         return None  # Return None if lat or lon is invalid
-
-#     resp = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_key}&units=metric').json()
-
-#     # Check if the weather data is available
-#     if resp and 'weather' in resp and len(resp['weather']) > 0:
-
-#         timezone_offset = resp.get('timezone', 0)
-#         utc_now = datetime.utcnow()
-#         local_time = utc_now + timedelta(seconds=timezone_offset)
-
-#         data = WeatherData(
-#             main=resp['weather'][0].get('main'),
-#             name=resp.get('name'),
-#             timezone=timezone_offset,
-#             description=resp['weather'][0].get('description'),
-#             icon=resp['weather'][0].get('icon'),
-#             feels_like=int(resp['main'].get('feels_like')),
-#             temp_min=int(resp['main'].get('temp_min')),
-#             temp_max=int(resp['main'].get('temp_max')),
-#             pressure=int(resp['main'].get('pressure')),
-#             humidity=int(resp['main'].get('humidity')),
-#             temperature=int(resp['main'].get('temp')),
-#             wind_speed=int(resp['wind'].get('speed', 0)), 
-#             sunrise=resp['sys'].get('sunrise'),             
-#             sunset=resp['sys'].get('sunset'),
-#             current_time=local_time.strftime('%H:%M')                 
-#         )
-#         return data
-#     else:
-#         return None  # Return None if weather data is not found
-
-# def main(city_name):
-#     if not city_name:  # Check if city name is empty
-#         print("No city name entered.")
-#         return None
-    
-#     lat, lon = get_lat_lon(city_name, api_key)
-#     weather_data = get_current_weather(lat, lon, api_key)
-#     return weather_data
-
-# if __name__ == "__main__":
-#     city_name = "Toronto"  # You can test with other city names as needed
-#     weather_data = main(city_name)
-    
-#     if weather_data:
-#         print(weather_data)
-#     else:
-#         print('Weather data not found.')
-
 import requests
 from dotenv import load_dotenv
 import os
@@ -163,7 +68,7 @@ def get_current_weather(lat, lon, API_key):
                 temp_max=int(resp['main'].get('temp_max')),
                 pressure=resp['main'].get('pressure'),
                 humidity=resp['main'].get('humidity'),
-                temperature=int(resp['main'].get('temp')),  # Changed to int
+                temperature=int(resp['main'].get('temp')),  
                 wind_speed=resp['wind'].get('speed', 0), 
                 sunrise=resp['sys'].get('sunrise'),             
                 sunset=resp['sys'].get('sunset'),
@@ -229,17 +134,30 @@ def get_5_day_forecast(lat, lon, API_key):
 
 def get_hourly_forecast(lat, lon, API_key):
     try:
-        resp = requests.get(f'https://api.weatherbit.io/v2.0/forecast/minutely?lat={lat}&lon={lon}&key={API_key}').json()
+        # API endpoint to get the forecast
+        url = f'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API_key}&units=metric'
+        resp = requests.get(url).json()  # Get the response in JSON format
         hourly_list = []
-
-        if resp and 'data' in resp:
-            for entry in resp['data']:
-                hourly_list.append({
-                    'time': datetime.utcfromtimestamp(entry['timestamp']).strftime('%H:%M'),  # Change to 'timestamp'
-                    'icon': entry['weather']['icon'],  # Change to access the weather icon
-                    'description': entry['weather']['description'],  # Change to access the weather description
-                    'temperature': int(entry['temp']),  # Changed to int
-                })
+        
+        # Check if the response contains the expected data
+        if resp and 'list' in resp:
+            # Get the current time
+            current_time = datetime.utcnow()
+            # Set the end time to 24 hours from now
+            end_time = current_time + timedelta(hours=24)
+            
+            for entry in resp['list']:
+                # Convert the timestamp to a datetime object
+                entry_time = datetime.utcfromtimestamp(entry['dt'])
+                
+                # Check if the entry is within the next 24 hours
+                if current_time <= entry_time < end_time:
+                    hourly_list.append({
+                        'time': entry_time.strftime('%H:%M'),  # Format the time
+                        'icon': entry['weather'][0]['icon'],  # Weather icon
+                        'description': entry['weather'][0]['description'],  # Weather description
+                        'temperature': int(entry['main']['temp']),  # Temperature in Celsius
+                    })
         else:
             print("No hourly forecast data found in response:", resp)  # Debugging line
         
