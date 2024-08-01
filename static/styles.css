@@ -64,10 +64,11 @@ body {
 }
 
 .loading {
-    display: none;
-    font-size: 1.5rem;
-    color: #fff;
+    display: none; /* Hide loading message by default */
+    font-size: 1.5rem; /* Adjust font size as needed */
+    color: #fff; /* Adjust color for visibility */
 }
+
 .card {
     background: linear-gradient(#4a4a4a, #2c2c2c);
     color: #fff; 
