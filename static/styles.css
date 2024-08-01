@@ -13,3 +13,61 @@ body-scrollbar {
 body-scrollbar {
     -ms-overflow-style: none; 
 }
+body {
+    background: linear-gradient(to right, #f3a37e, #292e49);
+    font-family: 'Montserrat', sans-serif;
+    background-size: cover, cover;
+    background-blend-mode: overlay;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+.card {
+    border-radius: 15px;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-info {
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-info:hover {
+    background-color: #17a2b8;
+}
+
+.footer {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.small {
+    font-size: 0.9rem;
+
+}
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.6s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.loading {
+    display: none;
+    font-size: 1.5rem;
+    color: #fff;
+}
