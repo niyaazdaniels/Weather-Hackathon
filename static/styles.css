@@ -15,7 +15,7 @@ body-scrollbar {
 }
 body {
     background: linear-gradient(to right, #f3a37e, #292e49);
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-size: cover, cover;
     background-blend-mode: overlay;
     color: #ffffff;
@@ -44,9 +44,6 @@ body {
 .footer {
     background-color: rgba(0, 0, 0, 0.8);
     padding: 1rem;
-    position: relative;
-    bottom: 0;
-    width: 100%;
 }
 
 .small {
@@ -70,4 +67,24 @@ body {
     display: none;
     font-size: 1.5rem;
     color: #fff;
+}
+.card {
+    background: linear-gradient(#4a4a4a, #2c2c2c);
+    color: #fff; 
+    transition: transform 0.1s; 
+}
+
+img {
+    animation: float 3s ease-in-out infinite; 
+}
+@keyframes float {
+    0% {
+        transform: translatey(0);
+    }
+    50% {
+        transform: translatey(-10px);
+    }
+    100% {
+        transform: translatey(0);
+    }
 }
